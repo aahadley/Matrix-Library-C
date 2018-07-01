@@ -21,7 +21,7 @@ Matrix *mXclone(Matrix *A);
 void   *mXfreeAll(Matrix *matrix);
 void   *mXprint(Matrix *A);
 void 	mXscale(Matrix *matrix, double scalar);
-//diuble     mXdet(Matrix *A);
+//double     mXdet(Matrix *A);
 void   _deleteRow(Matrix *A, int row);
 void   _deleteColumn(Matrix *A, int column);
 void    *mXfillRand(Matrix *matrix , int seed, int mod);

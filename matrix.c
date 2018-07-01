@@ -13,7 +13,9 @@ Matrix *mXcreate(unsigned int rows, unsigned int columns)
 	char *ic;
 
 	Matrix *matrix = (Matrix *) malloc(sizeof(Matrix*));
-	if(!matrix)		return (Matrix *) error("Allocation failure in mXcreate. (*matrix)");
+
+	if(!matrix)
+		return (Matrix *) error("Allocation failure in mXcreate. (*matrix)");
 
 	matrix->numRows    = rows;
 	matrix->numColumns = columns;
@@ -35,6 +37,7 @@ Matrix *mXcreate(unsigned int rows, unsigned int columns)
 
 			free(matrix->values);
 			free(matrix);
+
 			return (Matrix *) error("Allocation error in mXcreate. (matrix->values[i])");
 		}
 	}
@@ -47,11 +50,13 @@ Matrix *mXclone(Matrix *A)
 	Matrix *imposter;
 	int i, j;
 
-	if(!A)			return (Matrix *) error("NULL pointer in mXclone. (A)");
+	if(!A) 
+		return (Matrix *) error("NULL pointer in mXclone. (A)");
 
 	imposter = mXcreate(A->numRows, A->numColumns);
 
-	if(!imposter)	return (Matrix *) error("Returning from mXclone due to allocation failure.");
+	if(!imposter) 
+		return (Matrix *) error("Returning from mXclone due to allocation failure.");
 
 	for(i = 0; i < A->numRows; i++)
 		for(j = 0; j < A->numColumns; j++)
@@ -62,7 +67,8 @@ void *mXfreeAll(Matrix *matrix)
 {
 	int i;
 
-	if(!matrix)		return NULL;
+	if(!matrix)	
+		return NULL;
 
 	for(i = 0; i < matrix->numRows; i++)
 		free(matrix->values[i]);
@@ -70,7 +76,6 @@ void *mXfreeAll(Matrix *matrix)
 	free(matrix->values);
 	free(matrix);
 
-	//printf("All values successfully freed from matrix.\n");
 	return NULL;
 }
 
@@ -81,11 +86,13 @@ Matrix *mXtranspose(Matrix *matrix)
 	Matrix *transpose;
 
 	//Don't call the error function in this case, because the transpose of a 0 x 0 matrix is indeed itself.
-	if(!matrix)		return NULL;
+	if(!matrix)	
+		return NULL;
 
 	transpose = mXcreate(matrix->numColumns , matrix->numRows);
 
-	if(!transpose)	return (Matrix *) error("Returning from mXtranspose due to allocation failure.");
+	if(!transpose) 
+		return (Matrix *) error("Returning from mXtranspose due to allocation failure.");
 
 	transpose->numRows    = matrix->numColumns;
 	transpose->numColumns = matrix->numRows;
@@ -106,10 +113,11 @@ Matrix *mXdot(Matrix *A, Matrix *B)
 	Matrix *dotProduct;
 
 	if(!A && !B)	return NULL;
-	if(!A)			return (Matrix *) error("NULL pointer passed to mXdot. (A)");
-	if(!B)			return (Matrix *) error("NULL pointer passed to mXdot. (B)");
+	if(!A) 			return (Matrix *) error("NULL pointer passed to mXdot. (A)");
+	if(!B) 			return (Matrix *) error("NULL pointer passed to mXdot. (B)");
 
-	if(A->numColumns != B->numRows)		return (Matrix *) error("Row-column mismatch in mXdot.");	// This isn't a pointer error, but the return value is the same.
+	if(A->numColumns != B->numRows)	
+		return (Matrix *) error("Row-column mismatch in mXdot.");	// This isn't a pointer error, but the return value is the same.
 
 
 	dotProduct = mXcreate(A->numColumns, B->numRows);
@@ -134,12 +142,13 @@ Matrix *mXadd(Matrix *A, Matrix *B)
 	if(!A)			return (Matrix *) error("NULL pointer passed to mXdot. (A)");
 	if(!B)			return (Matrix *) error("NULL pointer passed to mXdot. (B)");
 
-	if(A->numRows != B->numRows || A->numColumns != B->numColumns)	return (Matrix *) error("Row-column mismatch in mXadd.");	// This isn't a pointer error, but the return value is the same.
-
+	if(A->numRows != B->numRows || A->numColumns != B->numColumns)	
+		return (Matrix *) error("Row-column mismatch in mXadd.");	// This isn't a pointer error, but the return value is the same.
 
 	sum = mXcreate(A->numRows, B->numColumns);
 
-	if(!sum)		return error("Returning from mXsum due to pointer error.");
+	if(!sum) 
+		return error("Returning from mXsum due to pointer error.");
 
 	for(i =  0; i < A->numColumns; i++)
 	{
@@ -172,7 +181,8 @@ void *mXprint(Matrix *matrix)
 {
 	int i, j;
 
-	if(!matrix)	return "[NULL]";
+	if(!matrix)	
+		return "[NULL]";
 
 	for(i = 0; i < matrix->numRows; i++)
 	{
@@ -217,7 +227,8 @@ void *mXfillRand(Matrix *matrix , int seed, int mod)
 	double *p;
 	srand(seed);
 
-	if(!matrix)		return error("NULL pointer passed to mXfillRand. (matrix)");
+	if(!matrix)		
+		return error("NULL pointer passed to mXfillRand. (matrix)");
 
 	for(i = 0; i < matrix->numRows; i++)
 		for(j = 0; j < matrix->numColumns; j++)
